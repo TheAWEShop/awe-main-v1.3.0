@@ -1,3 +1,4 @@
+import { IconHome, IconUser, IconMessage } from '@tabler/icons-react';
 import { title } from "process";
 
 export const heroSlider = {

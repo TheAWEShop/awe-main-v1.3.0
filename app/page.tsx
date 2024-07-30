@@ -9,11 +9,27 @@ import { HeroParallax } from "@/components/ui/hero-parallax";
 import { heroParallexProducts, testimonials } from "@/constants/files";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { TracingBeam } from "@/components/ui/tracing-beam";
+import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
+import { GeminiBlock } from "@/components/siteComponents/GeminiBlock";
+import { LampContainer } from "@/components/ui/lamp";
+import { motion } from 'framer-motion';
+import { GlobeSection } from "@/components/siteComponents/GlobeSection";
 
 export default function Home() {
   return (
     <main className="">
+      <GeminiBlock />
+      <HeroParallax products={heroParallexProducts} />
+      <GlobeSection/>
+
       <TracingBeam>
+        <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+          <InfiniteMovingCards
+            items={testimonials}
+            direction="right"
+            speed="slow"
+          />
+        </div>
 
 
         <HeroCarousal />
@@ -37,14 +53,6 @@ export default function Home() {
         <ProductCarousal01 />
         <Separator className="py-2 my-2" />
         <TrustSection01 />
-        <HeroParallax products={heroParallexProducts} />
-        <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
-          <InfiniteMovingCards
-            items={testimonials}
-            direction="right"
-            speed="slow"
-          />
-        </div>
       </TracingBeam>
 
     </main>
