@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ModeToggle } from "../ui/modeToggler";
 
 function DashboardHeader() {
     return (
@@ -43,6 +44,7 @@ function DashboardHeader() {
 
 
             {/* The Avatar Circle Starts Here  */}
+            <ModeToggle />
 
             <DropdownMenu>
                 <DropdownMenuTrigger>

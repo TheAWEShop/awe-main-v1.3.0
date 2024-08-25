@@ -21,7 +21,17 @@ const schema = createSchema({
   }
 
   type Mutation {
-    createProduct(data: CreateProductInput): Product
+    createProduct(
+    name: String!
+    description: String
+    price: Float!
+    imageUrl: [String]
+    stockQuantity: Int
+    categoryId: Int
+    variantInputs: [CreateProductVariantInput]
+    collectionIds: [Int]
+    tagIds: [Int]
+): Product
     updateProduct(id: Int!, data: UpdateProductInput): Product
     deleteProduct(id: Int!): Product
     createCategory(name: String!, description: String, imageUrl: String): Category
@@ -142,6 +152,7 @@ input UpdateProductVariantInput {
   price: Float
   stockQuantity: Int
 }
+
 
   type Product {
     id: Int!
@@ -288,17 +299,7 @@ input UpdateProductVariantInput {
       customers: async () => await prisma.customer.findMany(),
     },
     Mutation: {
-      // createProduct: async (_parent, args) => {
-      //   return await prisma.product.create({
-      //     data: {
-      //       name: args.name,
-      //       description: args.description,
-      //       price: args.price,
-      //       imageUrl: args.imageUrl,
-      //       categoryId: args.categoryId || undefined,
-      //     },
-      //   });
-      // },
+
       createProduct: async (_parent, args) => {
         const {
           name,
@@ -310,7 +311,7 @@ input UpdateProductVariantInput {
           variantInputs,
           collectionIds,
           tagIds,
-        } = args.data;
+        } = args;
 
         if (!name || !price) {
           throw new Error("Name and price are required fields.");
@@ -336,18 +337,7 @@ input UpdateProductVariantInput {
 
         return product;
       },
-      // updateProduct: async (_parent, args) => {
-      //   return await prisma.product.update({
-      //     where: { id: args.id },
-      //     data: {
-      //       name: args.name,
-      //       description: args.description,
-      //       price: args.price,
-      //       imageUrl: args.imageUrl,
-      //       categoryId: args.categoryId || undefined,
-      //     },
-      //   });
-      // },
+
       updateProduct: async (_parent, args) => {
         const {
           name,
@@ -472,16 +462,18 @@ input UpdateProductVariantInput {
         });
       },
       createCustomer: async (_parent, args) => {
-        const { tags, address, ...customerData } = args;
+        const { firstName, lastName, email, phoneNumber, notes, tags, address } = args;
         return await prisma.customer.create({
           data: {
-            ...customerData,
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            notes,
             tags: {
               create: tags || [],
             },
-            address: {
-              create: address || {},
-            },
+            address: { create: address || undefined },
           },
         });
       },

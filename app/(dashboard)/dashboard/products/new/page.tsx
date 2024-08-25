@@ -63,8 +63,20 @@ import axios from 'axios'
 import ProductImageUploader from '@/components/Products/ProductImageUploader'
 import { useMutation } from '@apollo/client'
 import { CREATE_PRODUCT } from '@/ApolloClient/productQueries'
+import { useToast } from '@/components/ui/use-toast'
+import { redirect } from 'next/navigation'
 
 type Props = {}
+
+interface ProductType {
+  name: string,
+  description: string,
+  price: string,
+  imageUrl: [],
+  stockQuantity: string,
+  categoryId: category | null,
+  variants: [],
+}
 
 interface category {
   id: string,
@@ -72,13 +84,15 @@ interface category {
 }
 
 const ProductNewPage = (props: Props) => {
-  const [createProduct] = useMutation(CREATE_PRODUCT);
-  const [productData, setProductData] = useState({
+  const { toast } = useToast()
+  const [createProduct, { data, loading, error }] = useMutation(CREATE_PRODUCT);
+
+  const [productData, setProductData] = useState<ProductType>({
     name: '',
     description: '',
-    price: 0,
+    price: '0',
     imageUrl: [],
-    stockQuantity: 0,
+    stockQuantity: '0',
     categoryId: null,
     variants: [],
   });
@@ -87,22 +101,28 @@ const ProductNewPage = (props: Props) => {
   const [trending, setTrending] = useState(false);
   const [categories, setCategories] = useState<category[]>([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
     try {
       console.log(productData)
-      const { data } = await createProduct({
-        variables: {
-          data: productData,
-        },
-      });
-      console.log('Product Created:', data);
-    } catch (error) {
-      console.error('Error creating product:', error);
+        await createProduct({
+            variables: productData,
+        });
+    } catch (e) {
+        console.error(e);
     }
-  };
+};
 
-  const handleFilesUploaded = (images: { file: File; preview: string; url?: string }[]) => {
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value } = e.target;
+  setProductData(prevState => ({
+      ...prevState,
+      [name]: value,
+  }));
+};
+
+const handleFilesUploaded = (images: { file: File; preview: string; url?: string }[]) => {
     // Store the uploaded image URLs in form data
     const urls = images.map(image => image.url || '');
     setProductData(prevData => ({
@@ -110,6 +130,28 @@ const ProductNewPage = (props: Props) => {
       imageUrl: urls,
     }));
   };
+
+  useEffect(() => {
+    if (loading) {
+        toast({
+            title: "Loading!",
+            description: "Please wait while loading",
+        });
+    } else if (error) {
+        toast({
+            variant: "destructive",
+            title: "Error!",
+            description: error.message,
+        });
+    } else if (data) {
+        toast({
+            title: "Product created successfully!",
+            description: `Added new Product ${data.createProduct.name}`,
+        });
+        return redirect('/dashboard/products')
+    }
+}, [loading, error, data, toast]);
+
 
 
 

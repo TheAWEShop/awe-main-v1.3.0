@@ -1,24 +1,74 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const CREATE_PRODUCT = gql`
-    mutation CreateProduct($input: CreateProductInput!) {
-    createProduct(input: $input) {
+  mutation CreateProduct(
+    $name: String!
+    $description: String
+    $price: Float!
+    $imageUrl: [String]
+    $stockQuantity: Int
+    $categoryId: Int
+    $variantInputs: [CreateProductVariantInput]
+    $collectionIds: [Int]
+    $tagIds: [Int]
+  ) {
+    createProduct(
+      name: $name
+      description: $description
+      price: $price
+      imageUrl: $imageUrl
+      stockQuantity: $stockQuantity
+      categoryId: $categoryId
+      variantInputs: $variantInputs
+      collectionIds: $collectionIds
+      tagIds: $tagIds
+    ) {
+      id
+      name
+      description
+      price
+      imageUrl
+      stockQuantity
+      category {
         id
-        name
-        description
+      }
+      variants {
+        id
         price
-        imageUrl
-        stockQuantity
-        category {
+      }
+      collections {
+        id
+      }
+      tags {
         id
         name
-        }
-        variants {
-        id
-        sku
-        size
-        color
-        }
+      }
     }
-}
+  }
 `;
+
+export const GetProducts = gql`
+query {
+  products {
+    id
+    name
+    description
+    price
+    imageUrl
+    stockQuantity
+    variants {
+      sku
+      stockQuantity
+    }
+    category {
+      name
+    }
+    collections {
+      title
+    }
+    tags{
+      name
+    }
+  }
+}
+`

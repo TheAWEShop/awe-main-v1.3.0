@@ -432,7 +432,6 @@ import React, { useEffect, useState } from 'react'
 import Image from "next/image"
 import Link from "next/link"
 
-import { CREATE_CUSTOMER } from '@/ApolloClient'
 import { useMutation } from '@apollo/client'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
@@ -444,6 +443,9 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import TagsInput from '@/components/backend/TagsInput'
 import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/components/ui/use-toast'
+import { CREATE_CUSTOMER } from '@/ApolloClient'
+import { redirect } from 'next/navigation'
 
 type Props = {}
 
@@ -475,7 +477,9 @@ const countries = [
     // Add more countries as needed
 ];
 
+
 const CustomerNewPage = (props: Props) => {
+    const { toast } = useToast()
     const [createCustomer, { data, loading, error }] = useMutation(CREATE_CUSTOMER);
 
 
@@ -543,17 +547,36 @@ const CustomerNewPage = (props: Props) => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
         try {
-            console.log(formData)
-            await createCustomer({ variables: { input: formData } });
+            await createCustomer({
+                variables: formData,
+            });
         } catch (e) {
             console.error(e);
         }
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-    if (data) return <p>Customer created successfully! {data?.data.createCustomer}</p>;
+    useEffect(() => {
+        if (loading) {
+            toast({
+                title: "Loading!",
+                description: "Please wait while loading",
+            });
+        } else if (error) {
+            toast({
+                variant: "destructive",
+                title: "Error!",
+                description: error.message,
+            });
+        } else if (data) {
+            toast({
+                title: "Customer created successfully!",
+                description: `Added new customer ${data.createCustomer.firstName}`,
+            });
+            return redirect('/dashboard/customers')
+        }
+    }, [loading, error, data, toast]);
 
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">

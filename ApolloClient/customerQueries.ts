@@ -31,7 +31,7 @@ export const CREATE_CUSTOMER = gql`
     $email: String!,
     $phoneNumber: String!,
     $notes: String,
-    $tags: [TagInput!],
+    $tags: [TagInput],
     $address: AddressInput
   ) {
     createCustomer(

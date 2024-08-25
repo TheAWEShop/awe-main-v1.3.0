@@ -80,7 +80,7 @@ type Props = {}
 const Page = (props: Props) => {
   const { loading, error, data } = useQuery(GetCustomers);
 
-  if (loading) return <p>loading Customers data ...</p>;
+  if (loading) return <div className="absolute top-1/2 left-1/2 w-10 h-10 border-4 border-blue-500 rounded-full animate-spin border-t-transparent"></div>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

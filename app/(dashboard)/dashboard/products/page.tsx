@@ -62,6 +62,8 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import axios from 'axios'
+import { useQuery } from '@apollo/client'
+import { GetProducts } from '@/ApolloClient/productQueries'
 
 interface Product {
   id: string,
@@ -72,9 +74,14 @@ interface Product {
 }
 
 const ProductPage = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { loading, error, data } = useQuery(GetProducts);
 
+  useEffect( () => {
+    console.log(data)
+  },[data])
+  
+  if (loading) return <div className="absolute top-1/2 left-1/2 w-10 h-10 border-4 border-blue-500 rounded-full animate-spin border-t-transparent"></div>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className=" flex min-h-screen w-full flex-col bg-muted/40">
@@ -212,7 +219,7 @@ const ProductPage = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {products.map((product) => (
+                      {data.products.map((product) => (
                         <TableRow key={product.id}>
                           <TableCell className="hidden sm:table-cell">
                             <Image
@@ -258,7 +265,7 @@ const ProductPage = () => {
                         </TableRow>
                       ))}
 
-                      <TableRow>
+                      {/* <TableRow>
                         <TableCell className="hidden sm:table-cell">
                           <Image
                             alt="Product image"
@@ -515,7 +522,7 @@ const ProductPage = () => {
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </TableCell>
-                      </TableRow>
+                      </TableRow> */}
                     </TableBody>
                   </Table>
                 </CardContent>

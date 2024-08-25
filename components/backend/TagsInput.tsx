@@ -48,7 +48,7 @@ const TagsInput: React.FC<TagsInputProps> = ({ tags, setTags, onTagsChange }) =>
                         <button
                             type="button"
                             onClick={() => removeTag(tag)}
-                            className="ml-2 text-red-500 hover:text-red-700"
+                            className="ml-2 text-gray-800 hover:text-red-700"
                         >
                             &times;
                         </button>
