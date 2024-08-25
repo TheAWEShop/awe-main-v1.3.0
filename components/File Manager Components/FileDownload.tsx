@@ -3,30 +3,34 @@
 // Handle file download progress.
 // // 
 
-import { useState } from 'react';
-import { storage } from '@/FireBase/firebase-admin'; // Assuming you have your Firebase setup
 
-const FileDownload = ({ filePath }: { filePath: string }) => {
-    const [downloadProgress, setDownloadProgress] = useState(0);
+                     // main file starts here
 
-    const handleDownload = async () => {
-        const fileRef = storage.bucket().file(filePath);
-        const downloadStream = fileRef.createReadStream();
 
-        downloadStream.on('data', (chunk) => {
-            // Calculate download progress
-            const progress = (downloadStream.bytesRead / downloadStream.size) * 100;
-            setDownloadProgress(progress);
-        });
+// import { useState } from 'react';
+// import { storage } from '@/FireBase/firebase-admin'; // Assuming you have your Firebase setup
 
-        downloadStream.on('error', (error) => {
-            console.error('Error downloading file:', error);
-        });
+// const FileDownload = ({ filePath }: { filePath: string }) => {
+//     const [downloadProgress, setDownloadProgress] = useState(0);
 
-        downloadStream.on('finish', () => {
-            console.log('File downloaded successfully!');
-            setDownloadProgress(0);
-        });
+//     const handleDownload = async () => {
+//         const fileRef = storage.bucket().file(filePath);
+//         const downloadStream = fileRef.createReadStream();
+
+//         downloadStream.on('data', (chunk) => {
+//             // Calculate download progress
+//             const progress = (downloadStream.bytesRead / downloadStream.size) * 100;
+//             setDownloadProgress(progress);
+//         });
+
+//         downloadStream.on('error', (error) => {
+//             console.error('Error downloading file:', error);
+//         });
+
+//         downloadStream.on('finish', () => {
+//             console.log('File downloaded successfully!');
+//             setDownloadProgress(0);
+//         });
 
         // You can use a library like 'file-saver' to save the downloaded file
         // to the user's device.
@@ -54,16 +58,16 @@ const FileDownload = ({ filePath }: { filePath: string }) => {
 
             // export default FileDownload;
 
-    };
+ //   };
 
-    return (
-        <div>
-            <button onClick={handleDownload}>Download</button>
-            {downloadProgress > 0 && (
-                <progress value={downloadProgress} max="100" />
-            )}
-        </div>
-    );
-};
+//     return (
+//         <div>
+//             <button onClick={handleDownload}>Download</button>
+//             {downloadProgress > 0 && (
+//                 <progress value={downloadProgress} max="100" />
+//             )}
+//         </div>
+//     );
+// };
 
-export default FileDownload;
+// export default FileDownload;

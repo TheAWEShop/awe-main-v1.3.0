@@ -9,54 +9,55 @@ import { Button } from "@/components/ui/button"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
+import { Customer } from "@prisma/client"
 
 export default function Component() {
-  const [customers, setCustomers] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "555-1234",
-      address: "123 Main St, Anytown USA",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      phone: "555-5678",
-      address: "456 Oak Rd, Somewhere City",
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      phone: "555-9012",
-      address: "789 Elm St, Elsewhere Town",
-    },
-  ])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCustomer, setSelectedCustomer] = useState(null)
-  const [orderTags, setOrderTags] = useState([])
-  const [orderNotes, setOrderNotes] = useState("")
-  const [selectedShippingAddress, setSelectedShippingAddress] = useState(null)
-  const filteredCustomers = customers.filter((customer) =>
-    customer.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
-  const handleCustomerSelect = (customer) => {
-    setSelectedCustomer(customer)
-    setSelectedShippingAddress(customer.address)
-  }
-  const handleAddTag = (tag) => {
-    setOrderTags([...orderTags, tag])
-  }
-  const handleRemoveTag = (index) => {
-    const updatedTags = [...orderTags]
-    updatedTags.splice(index, 1)
-    setOrderTags(updatedTags)
-  }
-  const handleOrderNotesChange = (e) => {
-    setOrderNotes(e.target.value)
-  }
+  // const [customers, setCustomers] = useState([
+  //   {
+  //     id: 1,
+  //     firstName: "John Doe",
+  //     email: "john@example.com",
+  //     phone: "555-1234",
+  //     // address: "123 Main St, Anytown USA",
+  //   },
+  //   {
+  //     id: 2,
+  //     firstName: "Jane Smith",
+  //     email: "jane@example.com",
+  //     phone: "555-5678",
+  //     // address: "456 Oak Rd, Somewhere City",
+  //   },
+  //   {
+  //     id: 3,
+  //     firstName: "Bob Johnson",
+  //     email: "bob@example.com",
+  //     phone: "555-9012",
+  //     // address: "789 Elm St, Elsewhere Town",
+  //   },
+  // ])
+  // const [searchTerm, setSearchTerm] = useState("")
+  // const [selectedCustomer, setSelectedCustomer] = useState<Customer>(customers[0])
+  // const [orderTags, setOrderTags] = useState([])
+  // const [orderNotes, setOrderNotes] = useState("")
+  // const [selectedShippingAddress, setSelectedShippingAddress] = useState(null)
+  // const filteredCustomers = customers.filter((customer) =>
+  //   customer.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  // )
+  // const handleCustomerSelect = (customer: Customer) => {
+  //   setSelectedCustomer(customer)
+  //   setSelectedShippingAddress(customer.address)
+  // }
+  // const handleAddTag = (tag) => {
+  //   setOrderTags([...orderTags, tag])
+  // }
+  // const handleRemoveTag = (index) => {
+  //   const updatedTags = [...orderTags]
+  //   updatedTags.splice(index, 1)
+  //   setOrderTags(updatedTags)
+  // }
+  // const handleOrderNotesChange = (e) => {
+  //   setOrderNotes(e.target.value)
+  // }
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-6 py-8">
       <div className="col-span-2 lg:col-span-2 grid gap-6">
@@ -149,11 +150,11 @@ export default function Component() {
               <Input
                 id="customer-search"
                 placeholder="Search customer by name"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                // value={searchTerm}
+                // onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            {selectedCustomer ? (
+            {/* {selectedCustomer ? (
               <div className="grid gap-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="grid gap-2">
@@ -212,7 +213,7 @@ export default function Component() {
                   <div className="text-center text-muted-foreground">No customers found</div>
                 )}
               </div>
-            )}
+            )} */}
           </CardContent>
         </Card>
         <Card>
@@ -221,22 +222,22 @@ export default function Component() {
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="flex flex-wrap gap-2">
-              {orderTags.map((tag, index) => (
+              {/* {orderTags.map((tag, index) => (
                 <div key={index} className="bg-muted px-3 py-1 rounded-full flex items-center gap-2">
                   <span>{tag}</span>
                   <Button variant="ghost" size="icon" className="h-5 w-5" onClick={() => handleRemoveTag(index)}>
                     <XIcon className="h-3 w-3" />
                   </Button>
                 </div>
-              ))}
+              ))} */}
               <Input
                 placeholder="Add a tag"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleAddTag(e.target.value)
-                    e.target.value = ""
-                  }
-                }}
+                // onKeyDown={(e) => {
+                //   if (e.key === "Enter") {
+                //     handleAddTag(e.target.value)
+                //     e.target.value = ""
+                //   }
+                // }}
               />
             </div>
           </CardContent>
@@ -249,8 +250,8 @@ export default function Component() {
             <Textarea
               id="order-notes"
               placeholder="Add order notes"
-              value={orderNotes}
-              onChange={handleOrderNotesChange}
+              // value={orderNotes}
+              // onChange={handleOrderNotesChange}
             />
           </CardContent>
         </Card>
@@ -289,14 +290,14 @@ export default function Component() {
             <CardTitle>Shipping Address</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-            {selectedShippingAddress ? (
+            {/* {selectedShippingAddress ? (
               <div className="grid gap-2">
                 <div className="font-medium">{selectedCustomer.name}</div>
                 <div>{selectedShippingAddress}</div>
               </div>
             ) : (
               <div className="text-center text-muted-foreground">No shipping address selected</div>
-            )}
+            )} */}
           </CardContent>
           <CardFooter>
             <Button variant="outline">Change Address</Button>
@@ -307,7 +308,7 @@ export default function Component() {
   )
 }
 
-function TrashIcon(props) {
+function TrashIcon(props:any) {
   return (
     <svg
       {...props}
@@ -329,7 +330,7 @@ function TrashIcon(props) {
 }
 
 
-function XIcon(props) {
+function XIcon(props:any) {
   return (
     <svg
       {...props}

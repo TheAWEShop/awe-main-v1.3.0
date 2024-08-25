@@ -1,5 +1,5 @@
+import { storage } from '@/FireBase/firebase-admin';
 import { useState } from 'react';
-import { storage } from '../utils/firebase-admin';
 
 export const CreateFolder = () => {
     const [folderName, setFolderName] = useState('');

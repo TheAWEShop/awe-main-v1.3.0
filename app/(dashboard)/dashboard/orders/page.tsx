@@ -65,49 +65,49 @@ export default function Component() {
   const totalOrders = orders.length
   const totalReturns = orders.filter((order) => order.status === "Cancelled").length
   const totalFulfilled = orders.filter((order) => order.status === "Fulfilled").length
-  useEffect(() => {
-    let filtered = orders
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (order) =>
-          order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          order.customerName.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-    }
-    if (filterStatus) {
-      filtered = filtered.filter((order) => order.status === filterStatus)
-    }
-    if (filterCustomerName) {
-      filtered = filtered.filter((order) => order.customerName.toLowerCase().includes(filterCustomerName.toLowerCase()))
-    }
-    if (filterDateRange.startDate && filterDateRange.endDate) {
-      filtered = filtered.filter((order) => {
-        const orderDate = new Date(order.orderDate)
-        return orderDate >= filterDateRange.startDate && orderDate <= filterDateRange.endDate
-      })
-    }
-    if (filterTotalAmount.min !== null && filterTotalAmount.max !== null) {
-      filtered = filtered.filter(
-        (order) => order.totalAmount >= filterTotalAmount.min && order.totalAmount <= filterTotalAmount.max,
-      )
-    }
-    filtered = filtered.sort((a, b) => {
-      if (a[sortColumn] < b[sortColumn]) return sortDirection === "asc" ? -1 : 1
-      if (a[sortColumn] > b[sortColumn]) return sortDirection === "asc" ? 1 : -1
-      return 0
-    })
-    setFilteredOrders(filtered)
-  }, [
-    orders,
-    searchTerm,
-    sortColumn,
-    sortDirection,
-    filterStatus,
-    filterCustomerName,
-    filterDateRange,
-    filterTotalAmount,
-  ])
-  const handleSort = (column) => {
+  // useEffect(() => {
+  //   let filtered = orders
+  //   if (searchTerm) {
+  //     filtered = filtered.filter(
+  //       (order) =>
+  //         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         order.customerName.toLowerCase().includes(searchTerm.toLowerCase()),
+  //     )
+  //   }
+  //   if (filterStatus) {
+  //     filtered = filtered.filter((order) => order.status === filterStatus)
+  //   }
+  //   if (filterCustomerName) {
+  //     filtered = filtered.filter((order) => order.customerName.toLowerCase().includes(filterCustomerName.toLowerCase()))
+  //   }
+  //   if (filterDateRange.startDate && filterDateRange.endDate) {
+  //     filtered = filtered.filter((order) => {
+  //       const orderDate = new Date(order.orderDate)
+  //       return orderDate >= filterDateRange.startDate && orderDate <= filterDateRange.endDate
+  //     })
+  //   }
+  //   if (filterTotalAmount.min !== null && filterTotalAmount.max !== null) {
+  //     filtered = filtered.filter(
+  //       (order) => order.totalAmount >= filterTotalAmount.min && order.totalAmount <= filterTotalAmount.max,
+  //     )
+  //   }
+  //   filtered = filtered.sort((a, b) => {
+  //     if (a[sortColumn] < b[sortColumn]) return sortDirection === "asc" ? -1 : 1
+  //     if (a[sortColumn] > b[sortColumn]) return sortDirection === "asc" ? 1 : -1
+  //     return 0
+  //   })
+  //   setFilteredOrders(filtered)
+  // }, [
+  //   orders,
+  //   searchTerm,
+  //   sortColumn,
+  //   sortDirection,
+  //   filterStatus,
+  //   filterCustomerName,
+  //   filterDateRange,
+  //   filterTotalAmount,
+  // ])
+  const handleSort = (column:any) => {
     if (sortColumn === column) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc")
     } else {
@@ -115,23 +115,23 @@ export default function Component() {
       setSortDirection("asc")
     }
   }
-  const handleFilterStatus = (status) => {
+  const handleFilterStatus = (status:any) => {
     setFilterStatus(status)
   }
-  const handleFilterCustomerName = (name) => {
+  const handleFilterCustomerName = (name:any) => {
     setFilterCustomerName(name)
   }
-  const handleFilterDateRange = (range) => {
+  const handleFilterDateRange = (range:any) => {
     setFilterDateRange(range)
   }
-  const handleFilterTotalAmount = (range) => {
+  const handleFilterTotalAmount = (range:any) => {
     setFilterTotalAmount(range)
   }
-  const handleSearch = (term) => {
+  const handleSearch = (term:any) => {
     setSearchTerm(term)
   }
 
-  const handleDateRangeChange = (range) => {
+  const handleDateRangeChange = (range:any) => {
   //   setDateRange(range)
   //   if (range === "today") {
   //     const today = new Date()
@@ -254,7 +254,7 @@ export default function Component() {
                   <TableCell className="px-4 py-3">
                     <Badge
                       variant={
-                        order.status === "Fulfilled" ? "success" : order.status === "Pending" ? "warning" : "danger"
+                        order.status === "Fulfilled" ? "default" : order.status === "Pending" ? "destructive" : "destructive"
                       }
                     >
                       {order.status}
@@ -283,7 +283,7 @@ export default function Component() {
   )
 }
 
-function CalendarIcon(props) {
+function CalendarIcon(props:any) {
   return (
     <svg
       {...props}

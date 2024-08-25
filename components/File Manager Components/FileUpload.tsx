@@ -4,58 +4,68 @@
 // Display progress indicators during uploads.
 
 
-import { useState } from 'react';
-import { storage } from '@/FireBase/firebase-admin'; // Assuming you have your Firebase setup
 
-const FileUpload = () => {
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [uploadProgress, setUploadProgress] = useState(0);
+                            //main file starts here 
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]) {
-            setSelectedFile(event.target.files[0]);
-        }
-    };
+// import { useState } from 'react';
+// import { storage } from '@/FireBase/firebase-admin'; // Assuming you have your Firebase setup
 
-    const handleFileUpload = async () => {
-        if (!selectedFile) return;
+// const FileUpload = () => {
+//     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+//     const [uploadProgress, setUploadProgress] = useState(0);
 
-        const fileRef = storage.bucket().file(selectedFile.name);
-        const uploadTask = fileRef.save(selectedFile);
+//     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//         if (event.target.files && event.target.files[0]) {
+//             setSelectedFile(event.target.files[0]);
+//         }
+//     };
 
-        uploadTask.on(
-            'state_changed',
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                setUploadProgress(progress);
-            },
-            (error) => {
-                console.error('Error uploading file:', error);
-            },
-            () => {
-                console.log('File uploaded successfully!');
-                setUploadProgress(0);
-                setSelectedFile(null);
-            }
-        );
-    };
+//     const handleFileUpload = async () => {
+//         if (!selectedFile) return;
 
-    return (
-        <div>
-            <h2>Upload File</h2>
-            <input type="file" onChange={handleFileChange} />
-            {selectedFile && (
-                <div>
-                    <p>Selected file: {selectedFile.name}</p>
-                    <button onClick={handleFileUpload}>Upload</button>
-                    <progress value={uploadProgress} max="100" />
-                </div>
-            )}
-        </div>
-    );
-};
+//         const fileRef = storage.bucket().file(selectedFile.name);
+//         const uploadTask = fileRef.save(selectedFile);
 
-export default FileUpload;
+//         uploadTask.on(
+//             'state_changed',
+//             (snapshot) => {
+//                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//                 setUploadProgress(progress);
+//             },
+//             (error) => {
+//                 console.error('Error uploading file:', error);
+//             },
+//             () => {
+//                 console.log('File uploaded successfully!');
+//                 setUploadProgress(0);
+//                 setSelectedFile(null);
+//             }
+//         );
+//     };
+
+//     return (
+//         <div>
+//             <h2>Upload File</h2>
+//             <input type="file" onChange={handleFileChange} />
+//             {selectedFile && (
+//                 <div>
+//                     <p>Selected file: {selectedFile.name}</p>
+//                     <button onClick={handleFileUpload}>Upload</button>
+//                     <progress value={uploadProgress} max="100" />
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
+
+// export default FileUpload;
+
+
+
+                           //main file ends here 
+
+
+
 
 
 

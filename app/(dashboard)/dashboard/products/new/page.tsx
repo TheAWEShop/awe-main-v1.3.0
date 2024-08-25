@@ -71,9 +71,9 @@ type Props = {}
 interface ProductType {
   name: string,
   description: string,
-  price: string,
-  imageUrl: [],
-  stockQuantity: string,
+  price: number,
+  imageUrl: string[],
+  stockQuantity: number,
   categoryId: category | null,
   variants: [],
 }
@@ -90,9 +90,9 @@ const ProductNewPage = (props: Props) => {
   const [productData, setProductData] = useState<ProductType>({
     name: '',
     description: '',
-    price: '0',
+    price: 0,
     imageUrl: [],
-    stockQuantity: '0',
+    stockQuantity: 0,
     categoryId: null,
     variants: [],
   });

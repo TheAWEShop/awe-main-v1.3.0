@@ -292,7 +292,7 @@ export default function Component() {
   )
 }
 
-function CloudIcon(props) {
+function CloudIcon(props:any) {
   return (
     <svg
       {...props}
@@ -312,7 +312,7 @@ function CloudIcon(props) {
 }
 
 
-function DownloadIcon(props) {
+function DownloadIcon(props:any) {
   return (
     <svg
       {...props}
@@ -334,7 +334,7 @@ function DownloadIcon(props) {
 }
 
 
-function FileIcon(props) {
+function FileIcon(props:any) {
   return (
     <svg
       {...props}
@@ -355,7 +355,7 @@ function FileIcon(props) {
 }
 
 
-function FolderIcon(props) {
+function FolderIcon(props:any) {
   return (
     <svg
       {...props}
@@ -375,7 +375,7 @@ function FolderIcon(props) {
 }
 
 
-function HomeIcon(props) {
+function HomeIcon(props:any) {
   return (
     <svg
       {...props}
@@ -396,7 +396,7 @@ function HomeIcon(props) {
 }
 
 
-function LayoutGridIcon(props) {
+function LayoutGridIcon(props:any) {
   return (
     <svg
       {...props}
@@ -419,7 +419,7 @@ function LayoutGridIcon(props) {
 }
 
 
-function ListIcon(props) {
+function ListIcon(props:any) {
   return (
     <svg
       {...props}
@@ -444,7 +444,7 @@ function ListIcon(props) {
 }
 
 
-function MoveVerticalIcon(props) {
+function MoveVerticalIcon(props:any) {
   return (
     <svg
       {...props}
@@ -466,7 +466,7 @@ function MoveVerticalIcon(props) {
 }
 
 
-function SearchIcon(props) {
+function SearchIcon(props:any) {
   return (
     <svg
       {...props}
@@ -487,7 +487,7 @@ function SearchIcon(props) {
 }
 
 
-function ShareIcon(props) {
+function ShareIcon(props:any) {
   return (
     <svg
       {...props}
@@ -509,7 +509,7 @@ function ShareIcon(props) {
 }
 
 
-function TrashIcon(props) {
+function TrashIcon(props:any) {
   return (
     <svg
       {...props}
@@ -531,7 +531,7 @@ function TrashIcon(props) {
 }
 
 
-function UploadIcon(props) {
+function UploadIcon(props:any) {
   return (
     <svg
       {...props}

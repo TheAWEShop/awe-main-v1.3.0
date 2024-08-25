@@ -64,6 +64,7 @@ import {
 import axios from 'axios'
 import { useQuery } from '@apollo/client'
 import { GetProducts } from '@/ApolloClient/productQueries'
+import { useToast } from '@/components/ui/use-toast'
 
 interface Product {
   id: string,
@@ -74,14 +75,20 @@ interface Product {
 }
 
 const ProductPage = () => {
+  const { toast } = useToast()
   const { loading, error, data } = useQuery(GetProducts);
 
-  useEffect( () => {
-    console.log(data)
-  },[data])
-  
-  if (loading) return <div className="absolute top-1/2 left-1/2 w-10 h-10 border-4 border-blue-500 rounded-full animate-spin border-t-transparent"></div>;
-  if (error) return <p>Error: {error.message}</p>;
+  useEffect(() => {
+      if (error) {
+        toast({
+            variant: "destructive",
+            title: "Error!",
+            description: error.message,
+        });
+    } 
+}, [ error, toast]);
+
+if (loading) return <div className="absolute top-1/2 left-1/2 w-10 h-10 border-4 border-blue-500 rounded-full animate-spin border-t-transparent"/>;
 
   return (
     <div className=" flex min-h-screen w-full flex-col bg-muted/40">
@@ -219,14 +226,14 @@ const ProductPage = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {data.products.map((product) => (
+                      {data.products.map((product:any) => (
                         <TableRow key={product.id}>
                           <TableCell className="hidden sm:table-cell">
                             <Image
                               alt="Product image"
                               className="aspect-square rounded-md object-cover"
                               height="64"
-                              src="/placeholder.svg"
+                              src={product.imageUrl[0] ?? '/placeholder.svg'}
                               width="64"
                             />
                           </TableCell>
@@ -238,10 +245,10 @@ const ProductPage = () => {
                           </TableCell>
                           <TableCell>${product.price}</TableCell>
                           <TableCell className="hidden md:table-cell">
-                            {product.stock}
+                            {product.stockQuantity}
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
-                            {product.category}
+                            {product.variants}
                           </TableCell>
                           <TableCell>
                             <DropdownMenu>

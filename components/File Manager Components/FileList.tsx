@@ -3,64 +3,72 @@
 // Include file name, size, last modified date, and icons.
 // Implement pagination for large file lists.
 
-import { useState, useEffect } from 'react';
-import { storage } from '@/FireBase/firebase-admin'; // Assuming you have your Firebase setup
+                                // main code here 
 
-const FileList = () => {
-    const [files, setFiles] = useState<any[]>([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [isLoading, setIsLoading] = useState(false);
+// import { useState, useEffect } from 'react';
+// import { storage } from '@/FireBase/firebase-admin'; // Assuming you have your Firebase setup
 
-    const fetchFiles = async (page: number) => {
-        setIsLoading(true);
-        try {
-            const [files] = await storage.bucket().getFiles({
-                // Pagination parameters
-                maxResults: 10, // Adjust as needed
-                pageToken: page > 1 ? files[files.length - 1].metadata.generation : undefined,
-            });
-            setFiles(files);
-            setTotalPages(Math.ceil(files[0].metadata.bucket.metageneration / 10)); // Calculate total pages
-        } catch (error) {
-            console.error('Error fetching files:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+// const FileList = () => {
+//     const [files, setFiles] = useState<any[]>([]);
+//     const [currentPage, setCurrentPage] = useState(1);
+//     const [totalPages, setTotalPages] = useState(1);
+//     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        fetchFiles(currentPage);
-    }, [currentPage]);
+//     const fetchFiles = async (page: number) => {
+//         setIsLoading(true);
+//         try {
+//             const [files] = await storage.bucket().getFiles({
+//                 // Pagination parameters
+//                 maxResults: 10, // Adjust as needed
+//                 pageToken: page > 1 ? files[files.length - 1].metadata.generation : undefined,
+//             });
+//             setFiles(files);
+//             setTotalPages(Math.ceil(files[0].metadata.bucket.metageneration / 10)); // Calculate total pages
+//         } catch (error) {
+//             console.error('Error fetching files:', error);
+//         } finally {
+//             setIsLoading(false);
+//         }
+//     };
 
-    const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-    };
+//     useEffect(() => {
+//         fetchFiles(currentPage);
+//     }, [currentPage]);
 
-    return (
-        <div>
-            <h2>Files</h2>
-            {isLoading && <p>Loading files...</p>}
-            <ul>
-                {files.map((file) => (
-                    <li key={file.id}>
-                        <a href={file.metadata.mediaLink} target="_blank" rel="noopener noreferrer">
-                            {file.name}
-                        </a>
-                        <span> - {file.metadata.size} bytes</span>
-                        <span> - {new Date(file.metadata.updated).toLocaleDateString()}</span>
-                    </li>
-                ))}
-            </ul>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div>
-    );
-};
+//     const handlePageChange = (page: number) => {
+//         setCurrentPage(page);
+//     };
 
-export default FileList;
+//     return (
+//         <div>
+//             <h2>Files</h2>
+//             {isLoading && <p>Loading files...</p>}
+//             <ul>
+//                 {files.map((file) => (
+//                     <li key={file.id}>
+//                         <a href={file.metadata.mediaLink} target="_blank" rel="noopener noreferrer">
+//                             {file.name}
+//                         </a>
+//                         <span> - {file.metadata.size} bytes</span>
+//                         <span> - {new Date(file.metadata.updated).toLocaleDateString()}</span>
+//                     </li>
+//                 ))}
+//             </ul>
+//             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+//         </div>
+//     );
+// };
+
+// export default FileList;
+
+
+                                    // main code ended       
+                                    
+                                    
 
 
 
+                                    
 
 // import { useState, useEffect } from 'react';
 // import { storage } from '../utils/firebase-admin';
